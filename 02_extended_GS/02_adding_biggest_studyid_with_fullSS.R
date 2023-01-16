@@ -46,17 +46,24 @@ selection_of_pow_gwas=function(x)
     if (!is.na(y$n_cases[i])){
       prev=y$n_cases[i]/y$n_initial[i]
       Neff=4*prev*(1-prev)*y$n_initial[i]
+      if (y$n_cases[i]<=2000) Neff=NA
     } else {
       Neff=y$n_initial[i]
     }
     n=c(n,Neff)  
   }
-  out=y[which.max(n),"study_id"]
-  if (max(n)<=2000) out=NA
+  if (sum(is.na(n))!=length(n)){
+    out=y[which.max(n),"study_id"]
+    if (max(n,na.rm=T)<=2000) out=NA
+  } else {
+    out=NA
+  }
+  #
   out
 }
 l=sapply(efos_with_ss,FUN=selection_of_pow_gwas)
 l[1]
+table(is.na(l))
 
 GS=cbind(GS,the_biggest_GWAS_id=l[GS$trait_info.ontology])
 table(!is.na(GS$the_biggest_GWAS_id))
