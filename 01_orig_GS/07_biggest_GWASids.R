@@ -1,6 +1,6 @@
-setwd("~/Projects/saving_gwas_filtered_to_bucket/")
+setwd("~/Projects/Sanger_OT_GoldStandards/01_orig_GS/")
 
-libray(data.table)
+library(data.table)
 
 GS=fread("GS_l2G.txt",data.table=F)
 si=fread("study_index.csv",data.table=F)
