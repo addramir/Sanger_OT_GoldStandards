@@ -9,10 +9,12 @@ ind=match(GS$study_id,si$study_id)
 table(si$study_id[ind]==GS$study_id)
 GS$has_sumstats=si$has_sumstats[ind]
 
+GS=cbind(GS,si[ind,c("trait_reported","source")])
+
 ind=which(GS$gold_standard_status==1 & GS$gs_confidence%in%c("High","Medium"))
 GS_pos=GS[ind,]
 
-GS_pos=GS_pos[,c(1:6,69:73,52)]
+GS_pos=GS_pos[,c(1:6,69:75,52)]
 fwrite(x=GS_pos,file="GS_positives.csv")
 
 GS_pos_ss=GS_pos[GS_pos$has_sumstats=="TRUE",]
